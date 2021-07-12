@@ -4,7 +4,7 @@
         <Header></Header>
     </div>
     <div>
-        <Main></Main>
+        <Home></Home>
     </div>
     <div>
         <Footer></Footer>
@@ -15,13 +15,17 @@
 <script>
     import Header from './Header.vue'
     import Footer from './Footer.vue'
-    import Main from './Main.vue'
+    import Home from './Home.vue'
+    import Shop from './Shop.vue'
     export default {
-     
+        data : {
+            currentPage: Home
+        },
         components: {
             Header,
-            Main,
-            Footer
+            Home,
+            Footer,
+            Shop,
         }
     }
 </script>

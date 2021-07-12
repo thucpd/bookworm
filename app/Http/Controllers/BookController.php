@@ -15,7 +15,22 @@ class BookController extends Controller
 
     public function getBookSlider(Request $request)
     {
-        $bookSlider = Book::orderByDesc('id')->limit(10)->get()->toArray();
+        $bookSlider = Book::orderByDesc('id')->limit(10)->get();
+        return response()->json([
+            $bookSlider
+        ]);
+    }
+    public function getListBookRecomend(Request $request)
+    {
+        $bookSlider = Book::limit(8)->get();
+        return response()->json([
+            $bookSlider
+        ]);
+    }
+
+    public function getListBookPopular(Request $request)
+    {
+        $bookSlider = Book::orderByDesc('id')->limit(8)->get();
         return response()->json([
             $bookSlider
         ]);

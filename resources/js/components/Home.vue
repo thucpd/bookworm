@@ -13,117 +13,37 @@
         </div>
         <div class="row border mb-3">
             <div class="MultiCarousel" data-items="1,3,5,6" data-slide="1" id="MultiCarousel"  data-interval="1000">
-            <div class="MultiCarousel-inner">
-                <div v-for="slider in listSliders" :key="slider.id" class="item">
-                    <div class="pad15">
-                        <p class="lead">{{ slider.book_title }}</p>
-                        <p>{{ slider.author_id }}</p>
-                        <p>{{ slider.book_price }}</p>
-                        <p>{{ slider.book_summary }}</p>
+                <div class="MultiCarousel-inner">
+                    <div v-for="slider in listSliders" :key="slider.id" class="item">
+                        <div class="pad15">
+                            <img :src="image" class="img-responsive" height="100" width="90">
+                            <p class="lead">{{ slider.book_title }}</p>
+                            <p>{{ slider.author_id }}</p>
+                            <p>{{ slider.book_price }}</p>
+                            <p>{{ slider.book_summary }}</p>
+                        </div>
                     </div>
+
                 </div>
-            </div>
             <button class="btn btn-primary leftLst"><</button>
             <button class="btn btn-primary rightLst">></button>
-        </div>
+            </div>
         </div>
         <div>
-            <div class="row"> <h3>Featured Books</h3> </div>
-            
+            <div class="row"> 
+                <div class="col text-center"><h3>Featured Books</h3> </div>
+            </div>
             <div class="row mb-3">
                 <div class="col text-right">
-                    <button type="button" class="btn btn-secondary">Recommend</button>
+                    <button @click="swapComponent('RecommendBookComponent')" type="button" class="btn btn-secondary" v-bind:class="{disabled : disableRecommend}">Recommend</button>
                 </div>
                 <div class="col">
-                    <button type="button" class="btn btn-secondary disabled">Popular</button>
+                    <button @click="swapComponent('PopularBookComponent')" type="button" class="btn btn-secondary" v-bind:class="{disabled : disablePopular}">Popular</button>
                 </div>
             </div>
             <div class="row border">
-                <div class="col">
-                    <div class="row">
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="item">
-                                <div class="pad15">
-                                    <p class="lead">Multi Item Carousel</p>
-                                    <p>₹ 1</p>
-                                    <p>₹ 6000</p>
-                                    <p>50% off</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div :is="currentComponentBook"></div>
+                <div v-show="!currentComponentBook">
                 </div>
             </div>
         </div>
@@ -131,9 +51,36 @@
 </template>
 
 <script>
+    import RecommendBookComponent from './RecommendBookComponent.vue'
+    import PopularBookComponent from './PopularBookComponent.vue'
+     
+      
     export default {
         mounted() {
-
+        },
+        data() {
+            return {
+                slider: {
+                    id:0,
+                    image: '',
+                    title: '',
+                    author: '',
+                    price: 0
+                },
+                listSliders: [],
+                listRecomend: [],
+                error: null,
+                image : 'http://127.0.0.1:8000/image/book_1.png',
+                currentComponentBook : RecommendBookComponent,
+                disableRecommend : false,
+                disablePopular : true
+            }
+        },
+        created() {
+            this.getListSlider();
+            this.getListRecomend();
+        },
+        updated: function () {
             var itemsMainDiv = ('.MultiCarousel');
             var itemsDiv = ('.MultiCarousel-inner');
             var itemWidth = "";
@@ -234,32 +181,38 @@
                 ResCarousel(ell, Parent, slide);
             }
         },
-        data() {
-            return {
-                slider: {
-                    id:0,
-                    image: '',
-                    title: '',
-                    author: '',
-                    price: 0
-                },
-                listSliders: [],
-                error: null
-            }
-        },
-        created() {
-            this.getListSlider()
-        },
         methods: {
-
             async getListSlider() {
                 try {
                     const response = await axios.get('/api/getBookSlider');
-                    this.listSliders = response.data
+                    this.listSliders = response.data[0]
                 } catch (error) {
                     this.error = error.response.data
                 }
            },
+            async getListRecomend() {
+                try {
+                    const response = await axios.get('/api/getListBookRecomend');
+                    this.listRecomend = response.data[0]
+                } catch (error) {
+                    this.error = error.response.data
+                }
+           },
+            swapComponent: function(component)
+            {
+                this.currentComponentBook = component;
+                if (component == 'RecommendBookComponent') {
+                    this.disableRecommend = false;
+                    this.disablePopular = true;
+                } else {
+                    this.disableRecommend = true;
+                    this.disablePopular = false;
+                }
+            }
+        },
+        components: {
+            RecommendBookComponent,
+            PopularBookComponent
         }
     }
 

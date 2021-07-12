@@ -20,4 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/getBook', 'BookController@getBook');
 Route::get('/getBookSlider', 'BookController@getBookSlider');
+Route::get('/getListBookRecomend', 'BookController@getListBookRecomend');
+Route::get('/getListBookPopular', 'BookController@getListBookPopular');
 
