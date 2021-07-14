@@ -41,7 +41,7 @@
                     <button @click="swapComponent('PopularBookComponent')" type="button" class="btn btn-secondary" v-bind:class="{disabled : disablePopular}">Popular</button>
                 </div>
             </div>
-            <div class="row border">
+            <div class="row border" style="min-height:604px">
                 <div :is="currentComponentBook"></div>
                 <div v-show="!currentComponentBook">
                 </div>
