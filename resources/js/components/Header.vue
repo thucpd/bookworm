@@ -5,12 +5,35 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">Shop</a>
-        <a class="nav-item nav-link" href="#">About</a>
-        <a class="nav-item nav-link" href="#">Card</a>
-        </div>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <router-link
+                    class="nav-link"
+                    :class="[{active: $route.name === 'index'}]"
+                    :to="{name: 'index'}"
+                >
+                    Home
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link
+                    class="nav-link"
+                    :class="[{active: $route.name === 'shop'}]"
+                    :to="{name: 'shop'}"
+                >
+                    Shop
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link
+                    class="nav-link"
+                    :class="[{active: $route.name === 'about'}]"
+                    :to="{name: 'about'}"
+                >
+                    About
+                </router-link>
+            </li>
+        </ul>
     </div>
     </nav>
 </template>
@@ -19,6 +42,7 @@
     export default {
         mounted() {
             
-        }
+        },
+        name : 'Header'
     }
 </script>

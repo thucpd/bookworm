@@ -38,32 +38,12 @@
            
         },
         data() {
-            return {
-                slider: {
-                    id:0,
-                    image: '',
-                    title: '',
-                    author: '',
-                    price: 0
-                },
-                listSliders: [],
-                listPopular: [],
-                error: null,
-                image : 'http://127.0.0.1:8000/image/book_1.png'
-            }
+            
         },
         created() {
-            this.getListPopular();
         },
         methods: {
-            async getListPopular() {
-                try {
-                    const response = await axios.get('/api/getListBookPopular');
-                    this.listPopular = response.data[0]
-                } catch (error) {
-                    this.error = error.response.data
-                }
-           },
+            
         }
     }
 </script>

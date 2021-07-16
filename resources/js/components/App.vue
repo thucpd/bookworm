@@ -4,7 +4,7 @@
         <Header></Header>
     </div>
     <div>
-        <Home></Home>
+        <router-view></router-view>
     </div>
     <div>
         <Footer></Footer>
@@ -26,7 +26,8 @@
             Home,
             Footer,
             Shop,
-        }
+        },
+        name : 'App'
     }
 </script>
 

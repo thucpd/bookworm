@@ -1,15 +1,25 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import ExampleComponent from '../components/ExampleComponent';
 
-Vue.use(VueRouter);
+import Home from '../components/Home';
+import Shop from '../components/Shop';
+import About from '../components/About';
 
-export default new VueRouter({
-    routes: [
-        {
-            path: '/home', 
-            component : ExampleComponent
-        }
-    ],
-    model: 'history'
-});
+
+const routes = [
+    {
+        path: '/',
+        component: Home,
+        name: 'index',
+    },
+    {
+        path: '/shop',
+        component: Shop,
+        name: 'shop',
+    },
+    {
+        path: '/about',
+        component: About,
+        name: 'about',
+    }
+];
+
+export default routes;
